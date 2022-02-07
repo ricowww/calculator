@@ -1,14 +1,238 @@
 <!DOCTYPE html>
 <html>
 <head>
-  <title>Page Title</title>
+  <title>The Boring Calculator</title>
   <meta charset="UTF-8"/>
+<style>
+    /*comments*/
+    /*syntax
+    element {style-class: value};
+    .class {style-class: value};
+    #id {style-class: value};
+    */
+    h1 {
+        font-size: 5vmin;
+    }
+    .display, .memory, h1, .operatorsSection, .numbersSection {
+      background-color: rgb(173, 173, 173);
+      padding: 10px;
+      width: 100vmin;
+      text-align: center;
+      justify-content: center;
+    }
+
+    .display, .memory {
+      background-color: rgb(255, 255, 255);
+      padding: 10px;
+      width: 100vmin;
+      min-height: 9vmin;
+      text-align: center;
+      justify-content: center;
+      font-size: 5vmin;
+    }
+
+    .memory {
+      background-color: rgb(129, 129, 129);
+    }
+
+
+    .operatorsSection, .numbersSection {
+        display: grid;
+        grid-template-columns: repeat(3, 15vmin);
+        
+    }
+
+    .numbers, .operators {
+        font-size: 2vmin;
+        padding: 2vmin;
+
+    }
+
+</style>
+
 </head>
 <body>
- 
+<h1>The Boring Calculator</h1>
+<div class="display">Results</div><!--display-->
+<div class="memory">Memory</div><!--memory-->
+
+<div class="operatorsSection">
+  <button class="operators" id="clear">C</button>
+  <button class="operators" id="equalsTo">=</button>
+  <button class="operators" id="plus">+</button>
+  <button class="operators" id="minus">-</button>
+  <button class="operators" id="multipliedBy">*</button>
+  <button class="operators" id="dividedBy">/</button>
+</div>
+
+<div class="numbersSection">
+  <button class="numbers" id="one">1</button>
+  <button class="numbers" id="two">2</button>
+  <button class="numbers" id="three">3</button>
+  <button class="numbers" id="four">4</button>
+  <button class="numbers" id="five">5</button>
+  <button class="numbers" id="six">6</button>
+  <button class="numbers" id="seven">7</button>
+  <button class="numbers" id="eight">8</button>
+  <button class="numbers" id="nine">9</button>
+  <button class="numbers" id="zero">0</button>
+  <button class="numbers" id="dot">.</button>
+  
+</div>
 
 <script>
-    
+
+//JS to store first set of number clicks and one dot on memory
+  
+    //Declare buttons as objects for DOM access
+    const clear = document.querySelector('#clear');
+    const equalsTo = document.querySelector('#equalsTo');
+    const plus = document.querySelector('#plus');
+    const minus = document.querySelector('#minus');
+    const multipliedBy = document.querySelector('#multipliedBy');
+    const dividedBy = document.querySelector('#dividedBy');
+    const one  = document.querySelector('#one');
+    const two = document.querySelector('#two');
+    const three = document.querySelector('#three');
+    const four = document.querySelector('#four');
+    const five = document.querySelector('#five');
+    const six = document.querySelector('#six');
+    const seven = document.querySelector('#seven');
+    const eight = document.querySelector('#eight');
+    const nine = document.querySelector('#nine');
+    const zero = document.querySelector('#zero');
+    const dot = document.querySelector('#dot');
+
+    //display objects
+    const memory = document.querySelector('.memory');
+    const display = document.querySelector('.display');
+  
+    //variables for storing results
+    let calcVarMem = ""; //memory var for current number inputs
+    let calcVar1 = ""; //container for input block 1
+    let calcVar2 = ""; //container for input block 2
+    let calcOperatorVar = "";
+    let calcEqualsVar = "";
+    let calcResult = "";
+
+//Appends digit to memory
+function typeToCalcVarMem(typeVar){
+    calcVarMem += typeVar.textContent; //actually works, i didnt just reload the renamed file jeez
+    console.log(calcVarMem);
+    memory.textContent = calcVarMem;
+    //*Add a JS to append the current Var Mem to Mem Div
+};
+
+//Check if a character is not present in a string, returns true if not present
+function checkForCharNot(strInput, charInput){
+    if (strInput.indexOf(charInput) !== -1) { //string does not contains character
+        return true;
+    } else {
+        return false;
+    };
+};
+
+//Triggers to store digits to variable memory
+one.addEventListener('click', (e) => {typeToCalcVarMem(e.target)});
+two.addEventListener('click', (e) => {typeToCalcVarMem(e.target)});
+three.addEventListener('click', (e) => {typeToCalcVarMem(e.target)});
+four.addEventListener('click', (e) => {typeToCalcVarMem(e.target)});
+five.addEventListener('click', (e) => {typeToCalcVarMem(e.target)});
+six.addEventListener('click', (e) => {typeToCalcVarMem(e.target)});
+seven.addEventListener('click', (e) => {typeToCalcVarMem(e.target)});
+eight.addEventListener('click', (e) => {typeToCalcVarMem(e.target)});
+nine.addEventListener('click', (e) => {typeToCalcVarMem(e.target)});
+zero.addEventListener('click', (e) => {typeToCalcVarMem(e.target)});
+dot.addEventListener('click', (e) => {
+    if(checkForCharNot(calcVarMem,'.')){ //to prevent adding more than one dot
+        //do nothing
+    } else {
+        typeToCalcVarMem(e.target);
+    }
+});
+
+
+//Key in the operator, and store memory to Var1
+function typeOperator(typeOp){ //typeOp from textcontent of click callback 
+    if (calcOperatorVar === '' && calcVarMem !== ''){ //operator button will only work if memory is not empty and Operator is empty
+        calcVar1 = calcVarMem; //store memory to Var1
+        calcVarMem = ''; //clear memory
+        calcOperatorVar = typeOp.textContent; //store operator
+        console.log(calcOperatorVar);
+        display.textContent = `${calcVar1} ${calcOperatorVar} ${calcVar2} ${calcEqualsVar} ${calcResult}`;
+    } else {}; //if not empty, do nothing
+};
+
+
+//Trigger operator buttons
+plus.addEventListener('click', (f) => {typeOperator(f.target)});
+minus.addEventListener('click', (f) => {typeOperator(f.target)});
+multipliedBy.addEventListener('click', (f) => {typeOperator(f.target)});
+dividedBy.addEventListener('click', (f) => {typeOperator(f.target)});
+
+
+//Switch between add, subtract, multiply, divide
+function operator(op, var1, var2){
+    let opResult = 0;
+    switch (op){
+        case '+':
+            opResult = var1 + var2;
+            break;
+        case '-':
+            opResult = var1 - var2;
+            break;
+        case '*':
+            opResult = var1 * var2;
+            break;    
+        case '/':
+            opResult = var1 / var2;
+            break;
+    }
+    opResult = (Math.floor(opResult*1000))/1000; //roundoff to 3 decimal places
+    return opResult;
+};
+
+
+//Key in the equals sign, Store memory to Var 2, Evaluate expression
+function typeEquals(typeEql){ //typeEql from textcontent of click callback 
+    if (calcVarMem !== '' && calcEqualsVar === '' && calcOperatorVar !== ''){ //operator will work if Mem is !empty AND EqVar is empty and OpVar is !empty
+        calcVar2 = calcVarMem; //store memory to Var2
+        calcVarMem = ''; //clear memory
+        calcEqualsVar = typeEql.textContent; //store operator
+        console.log(calcEqualsVar);
+        calcVar1 = Number(calcVar1);
+        calcVar2 = Number(calcVar2);
+        calcResult = operator(calcOperatorVar, calcVar1, calcVar2);//call operator function
+        console.log(calcResult);
+        display.textContent = `${calcVar1} ${calcOperatorVar} ${calcVar2} ${calcEqualsVar} ${calcResult}`;
+        calcVar1 = '';
+        calcVar2 = '';
+        calcOperatorVar = '';
+        calcEqualsVar = '';
+        calcResult = '';
+    } else {}; //if not empty, do nothing
+};
+
+//Trigger equals button
+equalsTo.addEventListener('click', (g) => {typeEquals(g.target)});
+
+//clear button
+function clearButton(){
+    calcVarMem = '';
+    calcVar1 = '';
+    calcVar2 = '';
+    calcOperatorVar = '';
+    calcEqualsVar = '';
+    calcResult = '';
+    display.textContent = `${calcVar1} ${calcOperatorVar} ${calcVar2} ${calcEqualsVar} ${calcResult}`;
+    memory.textContent = calcVarMem;
+};
+
+//Trigger clear button
+clear.addEventListener('click', () => {clearButton()});
+
+
 </script>
+
 </body>
 </html>

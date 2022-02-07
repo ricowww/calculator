@@ -29,9 +29,9 @@ INPUT
 -math operators
 
 STEPS
-1.HTML with screen div for text output
-2.HTML with clear, dot, equal, plus, minus, multiply, divide, and then 10 digits (17 buttons)
-3.CSS to group the div, command buttons, and number buttons
+1.HTML with screen div for text output - DONE
+2.HTML with clear, dot, equal, plus, minus, multiply, divide, and then 10 digits (17 buttons) - DONE
+3.CSS to group the div, command buttons, and number buttons - SKIP
 4.JS to store first set of number clicks and one dot on 1st variable, also roundoff to two decimal places
 5.JS to end 1st variable and store only one operation on operator variable (plus, minus, multiply, divide)
 6.JS to store second set of number clicks and one dot on 2nd variable, also roundoff to two decimal places
